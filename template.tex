@@ -16,6 +16,7 @@
   linkcolor=Green,
   ]{hyperref}
 \usepackage[]{titlesec}
+\usepackage[]{lipsum}
 
 \newcommand{\watermark}{
   \begin{figure}[b]
@@ -23,10 +24,10 @@
     \centering
   \end{figure}
 }
+\setcounter{secnumdepth}{3}
 
-\setcounter{secnumdepth}{2}
-
-\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesection}{\Roman{section}}
+\renewcommand{\thesubsection}{\arabic{subsection}}
 
 \titleformat{\section}{\normalfont\Large\bfseries\scshape}{Wykład \thesection:}{1em}{}
 
@@ -38,7 +39,15 @@
 
 \maketitle
 \watermark
+\newpage
 \tableofcontents
+\newpage
 
+\section{Ą}
+\subsection{ĄĄ}
+
+\subsubsection{ĄĄĄ}
+\label{sec:aaa}
+\lipsum[20-40]
 
 \end{document}

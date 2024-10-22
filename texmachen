@@ -1,0 +1,49 @@
+#!/bin/env bash
+
+# Function to parse command-line options
+parse_options() {
+    while getopts ":n:a:t:" opt; do
+        case ${opt} in
+            n) name="${OPTARG}" ;;
+            a) author="${OPTARG}" ;;
+            \?) echo "Invalid option: -$OPTARG" >&2; exit 1 ;;
+            :) echo "Option -$OPTARG requires an argument." >&2; exit 2 ;;
+        esac
+    done
+    shift $OPTIND
+}
+
+# Parse command-line options
+parse_options "$@"
+
+# Check if required options are provided
+if [[ -z "$name" ]]; then
+    echo "Missing required option: -n <project name>" >&2
+    exit 1
+fi
+if [[ -z "$author" ]]; then
+    author=mlecz
+fi
+
+template=~/.config/texmachen
+
+echo "Creating $name..."
+mkdir "$name"
+cd "$name"
+localfile=./$name.tex
+cp $template/template.tex "$localfile"
+
+sed -i -e "s/<TITLE>/$name/g" "$localfile"
+sed -i -e "s/<AUTHOR>/$author/g" "$localfile"
+sed -i -e "s/<YEAR>/$(date +%Y)/g" "$localfile"
+if [[ $(date +%m) -gt 9 ]]; then
+    term=Zimowy
+else
+    term=Letni
+fi
+sed -i -e "s/<TERM>/$term/g" "$localfile"
+
+mkdir graphics
+cp $template/watermark.png ./graphics/
+
+echo "Done, TeX files: $(ls *.tex)"

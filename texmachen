@@ -36,7 +36,8 @@ cp $template/template.tex "$localfile"
 sed -i -e "s/<TITLE>/$name/g" "$localfile"
 sed -i -e "s/<AUTHOR>/$author/g" "$localfile"
 sed -i -e "s/<YEAR>/$(date +%Y)/g" "$localfile"
-if [[ $(date +%m) -gt 9 ]]; then
+month=$(date +%m)
+if [[ $month -gt 9 || $month -lt 3 ]]; then
     term=Zimowy
 else
     term=Letni

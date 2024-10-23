@@ -25,14 +25,16 @@ if [[ -z "$author" ]]; then
     author=mlecz
 fi
 
+# Create notes repo
 template=~/.config/texmachen
-
 echo "Creating $name..."
 mkdir "$name"
 cd "$name"
 localfile=./$name.tex
 cp $template/template.tex "$localfile"
+git init
 
+# Fill in the template
 sed -i -e "s/<TITLE>/$name/g" "$localfile"
 sed -i -e "s/<AUTHOR>/$author/g" "$localfile"
 sed -i -e "s/<YEAR>/$(date +%Y)/g" "$localfile"
@@ -44,7 +46,9 @@ else
 fi
 sed -i -e "s/<TERM>/$term/g" "$localfile"
 
+# Init graphics
 mkdir graphics
 cp $template/watermark.png ./graphics/
 
+# Bye!
 echo "Done, TeX files: $(ls *.tex)"
